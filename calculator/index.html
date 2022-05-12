@@ -7,29 +7,120 @@
     <title>Calculator</title>
     <style>
       /* Upcoming CSS Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-align: center;
+      }
+      main {
+        width: 100vw;
+        height: 100vh;
+      }
+      .calculator {
+        display: flex;
+        flex-direction: column;
+        /* text-align: center; */
+        margin: 5% auto;
+        /*justify-content: center;*/
+        /* align-items: center; */
+      }
+      .calculator__row {
+        width: 100%;
+      }
+      button {
+        width: 100%;
+      }
     </style>
   </head>
   <body>
-    <input type="text" placeholder="First number" id="first" />
-    <input type="text" placeholder="Second number" id="second" />
-    <input type="text" placeholder="Result" id="result" />
-    <input type="button" class="button" value="+" />
-    <input type="button" class="button" value="-" />
-    <input type="button" class="button" value="/" />
-    <input type="button" class="button" value="*" />
+    <main>
+      <div class="calculator">
+        <div class="calculator__row">
+          <input type="text" placeholder="Number..." id="display" required />
+          <input type="button" value="Clear" id="clear" />
+        </div>
+        <div class="calculator__row">
+          <input type="button" value="+" class="button" />
+          <input type="button" value="-" class="button" />
+          <input type="button" value="/" class="button" />
+          <input type="button" value="*" class="button" />
+        </div>
+        <div class="calculator__row">
+          <input type="button" value="1" class="number" />
+          <input type="button" value="2" class="number" />
+          <input type="button" value="3" class="number" />
+          <input type="button" value="sin" class="trig" />
+        </div>
+        <div class="calculator__row">
+          <input type="button" value="4" class="number" />
+          <input type="button" value="5" class="number" />
+          <input type="button" value="6" class="number" />
+          <input type="button" value="cos" class="trig" />
+        </div>
+        <div class="calculator__row">
+          <input type="button" value="7" class="number" />
+          <input type="button" value="8" class="number" />
+          <input type="button" value="9" class="number" />
+          <input type="button" value="tan" class="trig" />
+        </div>
+        <div class="calculator__row">
+          <input type="button" value="." class="number" />
+          <input type="button" value="0" class="number" />
+          <input type="button" value="=" id="operate" />
+        </div>
+      </div>
+    </main>
 
     <!-- Javascript Calculator Logic -->
     <script>
-      let first = document.getElementById("first");
-      let second = document.getElementById("second");
-      let result = document.getElementById("result");
+      const displayBar = document.getElementById("display");
+      // Clear the display bar
+      document.getElementById("clear").addEventListener("click", () => {
+        displayBar.value = "";
+      });
 
-      const calculate = (e) =>
-        (result.value = eval(`${first.value}${e.target.value}${second.value}`));
+      // Display operation
+      function displayOperation(op) {
+        displayBar.value += op;
+      }
 
+      // operation buttons
       document
         .querySelectorAll(".button")
-        .forEach((button) => button.addEventListener("click", calculate));
+        .forEach((button) =>
+          button.addEventListener("click", (e) =>
+            displayOperation(e.target.value)
+          )
+        );
+
+      // number buttons
+      document
+        .querySelectorAll(".number")
+        .forEach((button) =>
+          button.addEventListener("click", (e) =>
+            displayOperation(e.target.value)
+          )
+        );
+
+      // display results
+      document.getElementById("operate").addEventListener("click", () => {
+        const result = eval(displayBar.value);
+        return (displayBar.value = result);
+      });
+
+      // trigonometric operations
+      document.querySelectorAll(".trig").forEach((button) =>
+        button.addEventListener("click", (e) => {
+          // it takes argument as radian
+          // required to convert the number into degrees
+          return e.target.value === "sin"
+            ? (displayBar.value = Math.sin(+displayBar.value))
+            : e.target.value === "cos"
+            ? (displayBar.value = Math.cos(+displayBar.value))
+            : (displayBar.value = Math.tan(+displayBar.value));
+        })
+      );
     </script>
   </body>
 </html>
