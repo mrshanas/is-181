@@ -22,14 +22,22 @@
         flex-direction: column;
         /* text-align: center; */
         margin: 5% auto;
-        /*justify-content: center;*/
-        /* align-items: center; */
+        justify-content: center;
+        align-items: center;
+        width: 80%;
       }
       .calculator__row {
         width: 100%;
+        display: flex;
       }
-      button {
-        width: 100%;
+      input[type="button"] {
+        width: 80%;
+      }
+      #display {
+        width: 80%;
+      }
+      #clear {
+        width: 20%;
       }
     </style>
   </head>
@@ -37,7 +45,7 @@
     <main>
       <div class="calculator">
         <div class="calculator__row">
-          <input type="text" placeholder="Number..." id="display" required />
+          <input type="text" placeholder="0" id="display" required />
           <input type="button" value="Clear" id="clear" />
         </div>
         <div class="calculator__row">
@@ -105,22 +113,33 @@
 
       // display results
       document.getElementById("operate").addEventListener("click", () => {
+        const arr = displayBar.value.split("(");
+
+        if (displayBar.value.includes("(")) {
+          const exp = +displayBar.value.slice(4);
+
+          const degree = (exp * Math.PI) / 180;
+
+          return arr[0] === "sin"
+            ? (displayBar.value = Math.sin(degree))
+            : arr[0] === "cos"
+            ? (displayBar.value = Math.cos(degree))
+            : (displayBar.value = Math.tan(degree));
+        }
+
         const result = eval(displayBar.value);
         return (displayBar.value = result);
       });
 
       // trigonometric operations
-      document.querySelectorAll(".trig").forEach((button) =>
-        button.addEventListener("click", (e) => {
-          // it takes argument as radian
-          // required to convert the number into degrees
-          return e.target.value === "sin"
-            ? (displayBar.value = Math.sin(+displayBar.value))
-            : e.target.value === "cos"
-            ? (displayBar.value = Math.cos(+displayBar.value))
-            : (displayBar.value = Math.tan(+displayBar.value));
-        })
-      );
+      document
+        .querySelectorAll(".trig")
+        .forEach((button) =>
+          button.addEventListener(
+            "click",
+            (e) => (displayBar.value = e.target.value + "(")
+          )
+        );
     </script>
   </body>
 </html>
