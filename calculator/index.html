@@ -116,9 +116,7 @@
         const arr = displayBar.value.split("(");
 
         if (displayBar.value.includes("(")) {
-          const exp = +displayBar.value.slice(4);
-
-          const degree = (exp * Math.PI) / 180;
+          const degree = (+arr[1] * Math.PI) / 180;
 
           return arr[0] === "sin"
             ? (displayBar.value = Math.sin(degree))
