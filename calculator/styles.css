@@ -1,0 +1,33 @@
+/* Upcoming CSS Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+main {
+  width: 100vw;
+  height: 100vh;
+}
+.calculator {
+  display: flex;
+  flex-direction: column;
+  /* text-align: center; */
+  margin: 5% auto;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+}
+.calculator__row {
+  width: 100%;
+  display: flex;
+}
+input[type="button"] {
+  width: 80%;
+}
+#display {
+  width: 80%;
+}
+#clear {
+  width: 20%;
+}
